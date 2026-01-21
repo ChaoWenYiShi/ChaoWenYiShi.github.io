@@ -28,7 +28,7 @@
 <meta property="og:description" content="母题—逆序对与期望  求长度为 $n$ 的排列的期望的逆序对个数。 对于每一对数，是否成为逆序对的概率显然为 $\frac{1}{2}$，那么就有：  E(x) &#x3D; E(\sum\limits_{i,j\mid i &lt; j}[a_i &gt; a_j])&#x3D;\sum\limits_{i,j\mid i &lt; j}(E([a_i &gt; a_j]) &#x3D; \sum\limits_{i,j\mid i &lt; j} \">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-25T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-01-18T15:15:46.169Z">
+<meta property="article:modified_time" content="2026-01-21T16:31:17.105Z">
 <meta property="article:author" content="Chaoyi, Sun">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -48,10 +48,10 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Chaoyi, Sun","sameAs":[]},"dateCreated":"2024-12-26T00:00:00+08:00","dateModified":"2026-01-18T23:15:46+08:00","datePublished":"2024-12-26T00:00:00+08:00","description":"","headline":"逆序对与期望","mainEntityOfPage":{"@type":"WebPage","@id":"https://sunchaoyi923.github.io/2024/12/26/Inversion/"},"publisher":{"@type":"Organization","name":"Chaoyi, Sun","sameAs":[]},"url":"https://sunchaoyi923.github.io/2024/12/26/Inversion/","thumbnailUrl":"/img/programming.png","image":1}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Chaoyi, Sun","sameAs":[]},"dateCreated":"2024-12-26T00:00:00+08:00","dateModified":"2026-01-22T00:31:17+08:00","datePublished":"2024-12-26T00:00:00+08:00","description":"","headline":"逆序对与期望","mainEntityOfPage":{"@type":"WebPage","@id":"https://sunchaoyi923.github.io/2024/12/26/Inversion/"},"publisher":{"@type":"Organization","name":"Chaoyi, Sun","sameAs":[]},"url":"https://sunchaoyi923.github.io/2024/12/26/Inversion/","thumbnailUrl":"/img/programming.png","image":1}</script>
   <link rel="shortcut icon" href="/img/Avatar.jpg"><meta name="theme-color" content="#f8f8f8"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.min.css" media="all" />
 </head>
-<body>
+<body><div class="sitebg"><div class="siteblur"></div></div>
 
 <div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
 
@@ -67,7 +67,7 @@
 
 
 
-<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/02/XCPC2025-2026/"><span class="title">2025-2026 XCPC</span></a><a class="item title" href="/2024/09/01/XCPC2024/"><span class="title">XCPC 2024</span></a><a class="item title" href="/2022/01/22/WC2022/"><span class="title">WC 2022 学习笔记</span></a><a class="item title" href="/2025/12/02/CCPC%20Chongqing25/"><span class="title">2025 CCPC 重庆站</span></a><a class="item title" href="/2024/11/02/ICPC%20Nanjing24/"><span class="title">ICPC 小白勇闯南京</span></a><a class="item title" href="/2025/11/24/ICPC%20Nanjing25/"><span class="title">2025 ICPC 南京站</span></a><a class="item title" href="/2025/11/05/ICPC%20Wuhan25/"><span class="title">2025 ICPC 武汉站</span></a><a class="item title" href="/2021/11/06/NOIP2021/"><span class="title">2021 NOIP 备赛记</span></a><a class="item title" href="/2022/10/04/NOIP2022/"><span class="title">2022 NOIP 备赛记</span></a><a class="item title" href="/2023/09/29/NOIP2023/"><span class="title">NOIP 2023 摆烂记</span></a></div></widget>
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2020/10/19/UVA12167/"><span class="title">题解：UVA12167 Proving Equivalences</span></a><a class="item title" href="/2020/11/20/UVA1401/"><span class="title">题解：UVA1401 Remember the Word</span></a><a class="item title" href="/2022/07/28/UVA1630/"><span class="title">题解：UVA1630 串折叠 Folding</span></a><a class="item title" href="/2024/09/01/XCPC2024/"><span class="title">XCPC 2024</span></a><a class="item title" href="/2021/08/15/UVA1626/"><span class="title">题解：UVA1626 括号序列 Brackets sequence</span></a><a class="item title" href="/2022/01/22/WC2022/"><span class="title">WC 2022 学习笔记</span></a><a class="item title" href="/2020/10/01/SPOJ16185/"><span class="title">题解：SP16185/UVA1108 BUSINESS - Mining your own business</span></a><a class="item title" href="/2020/07/19/SPOJ7259/"><span class="title">题解：SP7259 LITE - Light Switching</span></a><a class="item title" href="/2022/08/18/SPOJ13105/"><span class="title">题解：SP13105 MUTDNA - DNA</span></a><a class="item title" href="/2024/12/27/Topo/"><span class="title">树的拓扑序</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
@@ -80,7 +80,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Algorithm/">Algorithm</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2024-12-25T16:00:00.000Z">2024-12-26</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2026-01-18T15:15:46.169Z">2026-01-18</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2024-12-25T16:00:00.000Z">2024-12-26</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2026-01-21T16:31:17.105Z">2026-01-22</time></span></div></div></div>
     
     <div class="bottom only-title">
       
@@ -117,7 +117,7 @@ E(x) = E(\sum\limits_{i,j\mid i < j}[a_i > a_j])=\sum\limits_{i,j\mid i < j}(E([
 \sum \limits_{i = 1}^n \sum \limits_{j = i + 1}^n
 [1 - \frac{2i(n - j + 1)}{n(n + 1)}] [a_i > a_j]\\
 =\sum \limits_{i = 1}^n \sum \limits_{j = i + 1}^n [a_i > a_j] - \frac{2}{n(n + 1)}\sum \limits_{i = 1}^n (i\sum \limits_{j = i + 1}^{n}(n - j + 1)[a_i > a_j])</script><p>对于前者，直接循环维护即可。对于后者，用树状数组维护逆序对。但需要注意循环枚举应该从后往前，从而保证每次查询时在其之后的数的相对大小已存入树状数组中。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = n;i;--i)</span><br><span class="line">&#123;</span><br><span class="line">	sum += <span class="number">1.0</span> * i * <span class="built_in">query</span> (a[i]);</span><br><span class="line">	<span class="built_in">modify</span> (a[i],n - i + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = n;i;--i)</span><br><span class="line">&#123;</span><br><span class="line">    sum += <span class="number">1.0</span> * i * <span class="built_in">query</span> (a[i]);</span><br><span class="line">    <span class="built_in">modify</span> (a[i],n - i + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>变式 $3$ <a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/CF1096F">Inversion Expectation</a></li>
 </ul>
