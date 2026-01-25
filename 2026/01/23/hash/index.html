@@ -1,0 +1,986 @@
+
+<!DOCTYPE html><html lang="en" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin><link rel="preconnect" href="https://cdn.bootcdn.net" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>2022 NOIP 备赛记 - SUNCHAOYI</title>
+
+  
+    <meta name="description" content="本文摘自 cancan123456 的《卡哈希》。   本文基于 NOI WC 2024 csy 专家进行的讲解。  什么？你还在为卡不掉选手的十模哈希而感到痛苦？ 什么？你还在 CF hack 时看着对方的随机五十模数哈希而感到迷茫？ 不要担心，现隆重向您推出——LLL 算法卡哈希！ 在这之前，我们快速回顾一下几种简单的卡哈希方法。 OI 中常见的字符串哈希函数一般形如下式： H(s)&#x3D;\sum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022 NOIP 备赛记">
+<meta property="og:url" content="https://sunchaoyi923.github.io/2026/01/23/hash/">
+<meta property="og:site_name" content="SUNCHAOYI">
+<meta property="og:description" content="本文摘自 cancan123456 的《卡哈希》。   本文基于 NOI WC 2024 csy 专家进行的讲解。  什么？你还在为卡不掉选手的十模哈希而感到痛苦？ 什么？你还在 CF hack 时看着对方的随机五十模数哈希而感到迷茫？ 不要担心，现隆重向您推出——LLL 算法卡哈希！ 在这之前，我们快速回顾一下几种简单的卡哈希方法。 OI 中常见的字符串哈希函数一般形如下式： H(s)&#x3D;\sum">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-f884b6f2bc188bef8140d495c1c4dcd0_1440w.webp">
+<meta property="article:published_time" content="2026-01-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-23T15:47:08.333Z">
+<meta property="article:author" content="Chaoyi, Sun">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://pic1.zhimg.com/80/v2-f884b6f2bc188bef8140d495c1c4dcd0_1440w.webp">
+  
+  
+  
+  
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/img/Favicon.png">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Chaoyi, Sun","sameAs":[]},"dateCreated":"2026-01-23T00:00:00+08:00","dateModified":"2026-01-23T23:47:08+08:00","datePublished":"2026-01-23T00:00:00+08:00","description":"","headline":"2022 NOIP 备赛记","mainEntityOfPage":{"@type":"WebPage","@id":"https://sunchaoyi923.github.io/2026/01/23/hash/"},"publisher":{"@type":"Organization","name":"Chaoyi, Sun","sameAs":[]},"url":"https://sunchaoyi923.github.io/2026/01/23/hash/","thumbnailUrl":"/img/luogu.png","image":1}</script>
+  <link rel="shortcut icon" href="/img/Avatar.jpg"><meta name="theme-color" content="#f8f8f8"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.min.css" media="all" />
+</head>
+<body><div class="sitebg"><div class="siteblur"></div></div>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><div class="icon"><img no-lazy class="icon" src="/img/Avatar.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><a class="title" href="/"><div class="main">超闻逸事</div><div class="sub normal cap">Life & Academy</div><div class="sub hover cap" style="opacity:0"> Designed by SUNCHAOYI</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item" title="Self-Introduction" href="/Myself/" style="color:#3DC550"><img no-lazy src="/img/me.jpg" / onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="nav-item" title="Blog" href="/" style="color:#1BCDFC"><img no-lazy src="/img/post.jpg" / onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="nav-item" title="Favorite" href="/favorite/" style="color:#F44336"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m13.629 20.472l-.542.916c-.483.816-1.69.816-2.174 0l-.542-.916c-.42-.71-.63-1.066-.968-1.262c-.338-.197-.763-.204-1.613-.219c-1.256-.021-2.043-.098-2.703-.372a5 5 0 0 1-2.706-2.706C2 14.995 2 13.83 2 11.5v-1c0-3.273 0-4.91.737-6.112a5 5 0 0 1 1.65-1.651C5.59 2 7.228 2 10.5 2h3c3.273 0 4.91 0 6.113.737a5 5 0 0 1 1.65 1.65C22 5.59 22 7.228 22 10.5v1c0 2.33 0 3.495-.38 4.413a5 5 0 0 1-2.707 2.706c-.66.274-1.447.35-2.703.372c-.85.015-1.275.022-1.613.219c-.338.196-.548.551-.968 1.262" opacity=".5"/><path fill="currentColor" d="M10.99 14.308c-1.327-.978-3.49-2.84-3.49-4.593c0-2.677 2.475-3.677 4.5-1.609c2.025-2.068 4.5-1.068 4.5 1.609c0 1.752-2.163 3.615-3.49 4.593c-.454.335-.681.502-1.01.502c-.329 0-.556-.167-1.01-.502"/></svg></a></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="Search"></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">Recent Update</span></div><div class="widget-body fs14"><a class="item title" href="/2025/05/02/XCPC2025-2026/"><span class="title">2025-2026 XCPC</span></a><a class="item title" href="/2026/01/23/hash/"><span class="title">2022 NOIP 备赛记</span></a><a class="item title" href="/2022/10/04/NOIP2022/"><span class="title">2022 NOIP 备赛记</span></a><a class="item title" href="/2024/08/13/XOR/"><span class="title">求 $[1,n]$ 的异或和</span></a><a class="item title" href="/2025/01/03/summary24/"><span class="title">2024 年度小结</span></a><a class="item title" href="/2025/12/25/Data%20Lab/"><span class="title">CMU CS:APP Data Lab</span></a><a class="item title" href="/2025/12/28/Attack%20Lab/"><span class="title">CMU CS:APP Attack Lab</span></a><a class="item title" href="/2020/11/20/UVA1401/"><span class="title">题解：UVA1401 Remember the Word</span></a><a class="item title" href="/2022/01/22/WC2022/"><span class="title">WC 2022 学习笔记</span></a><a class="item title" href="/2021/08/15/UVA1626/"><span class="title">题解：UVA1626 括号序列 Brackets sequence</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">Home</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">Blog</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Algoirthm/">Algoirthm</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">Posted on: <time datetime="2026-01-22T16:00:00.000Z">2026-01-23</time></span><span class="sep updated"></span><span class="text updated">Updated on: <time datetime="2026-01-23T15:47:08.333Z">2026-01-23</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>2022 NOIP 备赛记</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><p><strong>本文摘自 <a target="_blank" rel="noopener" href="https://www.luogu.me/user/448887">cancan123456</a> 的<a target="_blank" rel="noopener" href="https://www.luogu.me/article/fx07jjaz">《卡哈希》</a></strong>。</p>
+<hr>
+<blockquote>
+<p>本文基于 NOI WC 2024 csy 专家进行的讲解。</p>
+</blockquote>
+<p>什么？你还在为卡不掉选手的十模哈希而感到痛苦？</p>
+<p>什么？你还在 CF hack 时看着对方的随机五十模数哈希而感到迷茫？</p>
+<p>不要担心，现隆重向您推出——LLL 算法卡哈希！</p>
+<p>在这之前，我们快速回顾一下几种简单的卡哈希方法。</p>
+<p>OI 中常见的字符串哈希函数一般形如下式：</p>
+<script type="math/tex; mode=display">H(s)=\sum_{i=1}^{|s|}s_ib^i\bmod p</script><p>其中 $0\le s_i&lt;26\le b&lt;p$，且 $p$ 一般为质数。</p>
+<p>多模哈希是选择多组 $(b,p)$，将 $H(s)$ 构成的有序对作为哈希结果。</p>
+<h2 id="单模哈希"><a href="#单模哈希" class="headerlink" title="单模哈希"></a>单模哈希</h2><p>相信这个东西的卡法已经为人熟知了，直接随机一堆字符串看看有没有相同即可，利用了生日悖论。</p>
+<p>这个做法挂亿会机也能找到双模哈希的碰撞。</p>
+<h2 id="自然溢出哈希"><a href="#自然溢出哈希" class="headerlink" title="自然溢出哈希"></a>自然溢出哈希</h2><p>$p=2^{64}$，对 $b$ 的奇偶性分类讨论：</p>
+<ol>
+<li>$b$ 为偶数，那么有</li>
+</ol>
+<script type="math/tex; mode=display">b^{64}\equiv2^{64}\left(\dfrac b2\right)^{64}\equiv0\pmod{2^{64}}</script><p>所以只需要构造低 $64$ 位相同的字符串即可。</p>
+<ol>
+<li>$b$ 为奇数，我们考虑字符集为 $\{0,1\}$ 的字符串 $s$，定义其取反 $\bar s$ 为 $0$ 变为 $1$，$1$ 变为 $0$ 后得到的字符串。令 $s_1=[0],s_{i+1}=s_i+\bar{s_i}$，那么容易发现 $H(s_{12})=H_{\bar{s_{12}}}$。</li>
+</ol>
+<h2 id="多模哈希"><a href="#多模哈希" class="headerlink" title="多模哈希"></a>多模哈希</h2><p>众所周知，某些选手在不会写 SA 或者 Z-function 或者 Manacher 等等字符串算法时会选择二分哈希这种做法，对于写正解的选手非常不公平，在介绍如何针对这些选手之前，先对 <strong>Lenstra-Lenstra-Lovász Lattice Reduction 算法</strong> 进行介绍。</p>
+<h2 id="格与基"><a href="#格与基" class="headerlink" title="格与基"></a>格与基</h2><p>本文只关注欧几里得空间中由向量加法构成的格，所以我们给出格的定义：</p>
+<p><strong>格</strong> 是欧几里得空间 $\mathbb R^n$ 的一个离散加法子群，且其中的元素可由 $n$ 个整系数的向量 <strong>基</strong> 线性组合生成。</p>
+<p>换句话说，基就是 $n$ 个整数向量 $\vec{v_i}$，格就是所有的 $\sum k_i\vec{v_i},k_i\in\mathbb Z$。</p>
+<h2 id="Gram-Schmidt-正交化"><a href="#Gram-Schmidt-正交化" class="headerlink" title="Gram-Schmidt 正交化"></a>Gram-Schmidt 正交化</h2><p>先定义正交基：</p>
+<p><strong>正交基</strong> 是一组基 $\vec{v_i}$，满足：</p>
+<script type="math/tex; mode=display">\forall i\ne j,\vec{v_i}\cdot\vec{v_j}=0</script><p>Gram-Schmidt 正交化可以将一组基 $\vec{v_i}$ 变为一组正交基 $\vec{v_i}^\ast$。</p>
+<p>Gram-Schmidt 正交化采用增量法构造，加入第一个向量时，直接令 $\vec{v_1}^\ast=\vec{v_1}$ 即可。</p>
+<p>加入第 $n+1$ 个向量时，我们考虑计算 $\vec{v_n}$ 对 $\vec{v_i}^\ast,1\le i&lt;n$ 的投影，从 $\vec{v_n}$ 中减去投影，具体可以参考这个图：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-f884b6f2bc188bef8140d495c1c4dcd0_1440w.webp" alt=""></p>
+<p>然后我们就得到了这个公式：</p>
+<script type="math/tex; mode=display">\vec{v_n}=\vec{v_n}-\sum_{i=1}^{n-1}\frac{\vec{v_i}\cdot\vec{v_n}}{\vec{v_i}\cdot\vec{v_i}}\vec{v_i}</script><h2 id="LLL-算法主体"><a href="#LLL-算法主体" class="headerlink" title="LLL 算法主体"></a>LLL 算法主体</h2><p>LLL 算法有一个参数 $\delta$，需要满足 $\dfrac14&lt;\delta&lt;1$，一般取 $\delta=\dfrac34$。</p>
+<p>定义一组基 $\vec{v_i}$ 的 LLL reduced 条件：</p>
+<script type="math/tex; mode=display">\textbf{Size Condition}:|\mu_{i,j}|=\frac{|\vec{v_i}\cdot\vec{v_j}^\ast|}{|\vec{v_j}^\ast|^2}\le\frac12,\text{ for all }1\le j<i\le n</script><script type="math/tex; mode=display">\textbf{Lov\'asz Condition}:|\vec{v_i}|^2\ge\left(\delta-\mu_{i,i-1}^2\right)|\vec{v_{i-1}}|^2,\text{ for all }1<i\le n</script><p>$\textbf{Lov\’asz Condition}$ 的一个等价表述为：</p>
+<script type="math/tex; mode=display">\textbf{Lov\'asz Condition}':\delta|\vec{v_i}|^2\le|\mu_{i,i+1}\vec{v_i}+\vec{v_{i+1}}|,\text{ for all }1\le i<n</script><p>其中 $\vec{v_i}^\ast$ 为 $\vec{v_i}$ 的 Gram-Schmidt 正交化基，还是增量法，对于 $n=1$，我们什么也不用做就可以满足两个条件。</p>
+<p>现在假设我们已经把 $\vec{v_i},1\le i&lt;k$ 变换成了 LLL reduced 的，我们加入了新向量 $\vec{v_k}$，我们先求出这些向量的 Gram-Schmidt 正交化基 $\vec{v_i}^\ast$，为了满足 $\textbf{Size Condition}$，我们枚举 $j$ 从 $k-1$ 到 $1$，执行：</p>
+<script type="math/tex; mode=display">\vec{v_k}\gets\vec{v_k}-\lfloor\mu_{k,j}\rceil\vec{v_j}</script><p>（$\lfloor x\rceil$ 表示 $x$ 四舍五入。）检查一下 $\textbf{Lov\’asz Condition}$ 是否成立，如果成立，我们直接令 $k\gets k+1$，否则，我们交换 $\vec{v_{k-1}}$ 与 $\vec{v_k}$，并令 $k\gets\max(k-1,2)$，与更前面的基进行比较。</p>
+<p>这个算法的正确性证明和终止性证明和时间复杂度证明都比较复杂，所以就不写了（<del>就是不会</del>）。</p>
+<p>LLL reduced 基有如下性质：</p>
+<p>设 $\vec{v_i}$ 是 $n$ 维格 $\mathcal L$ 的一组 LLL reduced 基，那么有：</p>
+<script type="math/tex; mode=display">|\vec{v_1}|\le\left(\frac2{\sqrt{4\delta-1}}\right)^{n-1}\lambda_1(\mathcal L)</script><p>其中 $\lambda_1(\mathcal L)$ 为格 $\mathcal L$ 中的最短向量长度，求解该向量被称为 SVP 问题（Shortest Vector Problem）。</p>
+<p>证明可以归纳法，所以我们直接把 $\delta$ 拉满（比如 $0.99$）就能产生一组不错的基，这个算法的时间复杂度是 $O(n^6\log^3B)$，其中 $B$ 是 $\max|\vec{v_i}|$，当然实际运用中严重跑不满。</p>
+<p>这样 LLL 算法就找到了 SVP 问题的一个近似解。</p>
+<h2 id="CVP"><a href="#CVP" class="headerlink" title="CVP"></a>CVP</h2><p>格中的困难问题之一——Closest Vector Problem，寻找格 $\mathcal L$ 中与向量 $\vec t$ 最近的向量（虽然这和怎么卡哈希没有关系，还是讲一下吧）。</p>
+<p>Babai’s nearest plane algorithm：首先将 $\mathcal L$ 跑一遍 LLL 得到 LLL reduced 基 $\vec{v_i}$，置 $\vec b=\vec t$，枚举 $j$ 从 $n$ 到 $1$，令 $\vec b=\vec b-\left\lceil\dfrac{\vec b\cdot\vec{b_j}}{\vec{b_j}\cdot\vec{b_j}}\right\rceil\vec{v_j}$，最后的 $\vec b$ 就是一个比较好的解。</p>
+<p>近似程度有多好呢？我们有这个算法求出的解至多是正确答案的 $2^{n/2}$ 倍。</p>
+<h2 id="对-LLL-卡常"><a href="#对-LLL-卡常" class="headerlink" title="对 LLL 卡常"></a>对 LLL 卡常</h2><p>下面是 sagemath 中 LLL 算法的实现，假设我们需要对由 $\vec{y_i}$ 生成的格进行 LLL 算法。</p>
+<p>首先计算 Gram-Schmidt 正交化基 $\vec{y_i}^\ast$ 和 $\mu$ 矩阵，计算 $\gamma_i=|\vec{x_i}|^2$，令 $k=2$ 表示我们准备好添加 $\vec{y_k}$ 进入 LLL reduced 基了。</p>
+<p>首先定义 <code>reduce(k, l)</code> 过程：如果 $|\mu_{k,l}|&gt;\dfrac12$，令 $\vec{y_k}\gets\vec{y_k}-\lfloor\mu_{k,l}\rceil\vec{y_l}$，然后对于所有 $1\le j&lt;l$，将 $\mu_{k,j}$ 减去 $\lfloor\mu_{k,l}\rceil\mu_{l,j}$。</p>
+<p>最后令 $\mu_{k,l}\gets\mu_{k,l}-\lfloor\mu_{k,l}\rceil$ 即可。</p>
+<p>然后定义 <code>exchange(k)</code> 过程：交换 $\vec{v_k},\vec{v_{k-1}}$，令 $\nu=\mu_{k,k-1},\delta=\gamma_k+\nu^2\gamma_{k-1}$ 更新 $\mu_{k,k-1}=\dfrac{\nu\gamma_{k-1}}\delta,\gamma_k=\dfrac{\gamma_k\gamma_{k-1}}\delta,\gamma_{k-1}=\delta$。</p>
+<p>然后对于所有 $1\le j&lt;k-1$，交换 $\mu_{k-1,j},\mu_{k,j}$，对于所有 $k+1\le j\le n$，令 $x_i=\mu_{i,k}$，并置 $\mu_{i,k}=\mu_{i,k-1}-\nu\mu_{i,k},\mu_{i,k-1}=\mu_{k,k-1}\mu_{i,k}+x_i$。</p>
+<blockquote>
+<p>等会补充证明。</p>
+</blockquote>
+<p>然后令 $k=2$，重复执行直到 $k&gt;n$：</p>
+<ol>
+<li><code>reduce(k, k - 1)</code></li>
+<li>如果 $\gamma_k\ge(\delta-\mu_{k,k-1}^2)\gamma_{k-1}$，倒序枚举 $l=k-1\to 1$，<code>reduce(k, l)</code>，将 $k$ 加 $1$。</li>
+<li>否则，<code>exchange(k)</code> 并令 $k=\max(k-1,2)$。</li>
+</ol>
+<h2 id="卡掉哈希！"><a href="#卡掉哈希！" class="headerlink" title="卡掉哈希！"></a>卡掉哈希！</h2><p>考虑将构造哈希碰撞转换为求解一个格的 SVP 问题。</p>
+<p>首先看这个题：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">h0 = <span class="number">45740974929179720441799381904411404011270459520712533273451053262137196814399</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2**168 + 355</span></span><br><span class="line">g = <span class="number">374144419156711147060143317175368453031918731002211L</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shitty_hash</span>(<span class="params">msg</span>):</span><br><span class="line">    h = h0</span><br><span class="line">    msg = <span class="built_in">map</span>(<span class="built_in">ord</span>, msg)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> msg:</span><br><span class="line">        h = (h + i) * g</span><br><span class="line">        <span class="comment"># This line is just to screw you up :))</span></span><br><span class="line">        h = h &amp; <span class="number">0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> h - <span class="number">0xe6168647f636</span></span><br></pre></td></tr></table></figure>
+<p>也就是 $b=2^{168}+355,p=2^{256}$ 的 $H$，你需要构造两个串满足其哈希相同。</p>
+<p>不妨设我们构造的两个串为 $s_i,t_i$，那么有：</p>
+<script type="math/tex; mode=display">\sum_{i=0}^{n-1}s_ib^{n-i}\equiv\sum_{i=0}^{n-1}t_ib^{n-i}\pmod p</script><script type="math/tex; mode=display">\sum_{i=0}^{n-1}(s_i-t_i)b^{n-i}\equiv0\pmod p</script><script type="math/tex; mode=display">\sum_{i=0}^{n-1}(s_i-t_i)b^{n-i}-kp=0</script><p>容易将问题转化为构造长 $n$ 的整数序列 $x_i=s_i-t_i$ 和整数 $k$，满足 $\sum x_ib^{n-i}-kp=0$，考虑构造这样的格：</p>
+<script type="math/tex; mode=display">\begin{bmatrix}1&0&0&\cdots&0&Kg^n\\0&1&0&\cdots&0&Kg^{n-1}\\0&0&1&\cdots&0&Kg^{n-2}\\\vdots&\vdots&\vdots&\ddots&\vdots&\vdots\\0&0&0&\cdots&1&Kp\end{bmatrix}</script><p>其中 $K$ 是一个大常数，比如 $2^{200}$，然后跑 LLL 算法，求一个 SVP。</p>
+<p>注意到我们的 $K$ 非常大，所以求出的 SVP 如果在 $K$ 这个维度不是 $0$，那么一定非常长，所以这个维度一定是 $0$，就满足了条件。</p>
+<p>由于我不想下 sagemath，于是就有了下面的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sympy <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">mod = <span class="number">2</span> ** <span class="number">256</span></span><br><span class="line">h0 = <span class="number">45740974929179720441799381904411404011270459520712533273451053262137196814399</span></span><br><span class="line">g = <span class="number">374144419156711147060143317175368453031918731002211</span></span><br><span class="line">K = <span class="number">2</span> ** <span class="number">200</span></span><br><span class="line">N = <span class="number">50</span></span><br><span class="line">y = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N):</span><br><span class="line">    y.append([])</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(N + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> i == j:</span><br><span class="line">            y[i].append(Rational(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">elif</span> j == N:</span><br><span class="line">            y[i].append(Rational(K * <span class="built_in">pow</span>(g, N - i, mod), <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            y[i].append(Rational(<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dot</span>(<span class="params">x, y</span>):</span><br><span class="line">    n = <span class="built_in">len</span>(x)</span><br><span class="line">    ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        ans += x[i] * y[i]</span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line">delta = Rational(<span class="number">99</span>, <span class="number">100</span>)</span><br><span class="line">n, m = N, N + <span class="number">1</span></span><br><span class="line">y_star = [[y[<span class="number">0</span>][i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m)]]</span><br><span class="line">mu = [[Rational(<span class="number">0</span>, <span class="number">1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m)] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Gram-Schmidt: i =&#x27;</span>, i)</span><br><span class="line">    y_star.append([y[i][j] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m)])</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i):</span><br><span class="line">        mu[i][j] = dot(y_star[j], y_star[i]) / dot(y_star[j], y_star[j])</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            y_star[i][k] -= y_star[j][k] * mu[i][j]</span><br><span class="line">gamma = [dot(y_star[i], y_star[i]) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">round</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> (x + Rational(<span class="number">1</span>, <span class="number">2</span>)).floor()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reduce</span>(<span class="params">k, l</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">abs</span>(mu[k][l]) &gt; Rational(<span class="number">1</span>, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            y[k][i] -= <span class="built_in">round</span>(mu[k][l]) * y[l][i]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(l):</span><br><span class="line">            mu[k][j] -= <span class="built_in">round</span>(mu[k][l]) * mu[l][j]</span><br><span class="line">        mu[k][l] -= <span class="built_in">round</span>(mu[k][l])</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exchange</span>(<span class="params">k</span>):</span><br><span class="line">    y[k - <span class="number">1</span>], y[k] = y[k], y[k - <span class="number">1</span>]</span><br><span class="line">    nu = mu[k][k - <span class="number">1</span>]</span><br><span class="line">    delta = gamma[k] + nu * nu * gamma[k - <span class="number">1</span>]</span><br><span class="line">    mu[k][k - <span class="number">1</span>] = nu * gamma[k - <span class="number">1</span>] / delta</span><br><span class="line">    gamma[k] *= gamma[k - <span class="number">1</span>] / delta</span><br><span class="line">    gamma[k - <span class="number">1</span>] = delta</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(k - <span class="number">1</span>):</span><br><span class="line">        mu[k - <span class="number">1</span>][j], mu[k][j] = mu[k][j], mu[k - <span class="number">1</span>][j]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k + <span class="number">1</span>, n):</span><br><span class="line">        xi = mu[i][k]</span><br><span class="line">        mu[i][k] = mu[i][k - <span class="number">1</span>] - nu * mu[i][k]</span><br><span class="line">        mu[i][k - <span class="number">1</span>] = mu[k][k - <span class="number">1</span>] * mu[i][k] + xi</span><br><span class="line">k = <span class="number">1</span></span><br><span class="line">maxk = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> k &lt; n:</span><br><span class="line">    <span class="keyword">if</span> maxk &lt; k:</span><br><span class="line">        maxk = k</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;LLL: new k =&#x27;</span>, k)</span><br><span class="line">    reduce(k, k - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> gamma[k] &gt;= (delta - mu[k][k - <span class="number">1</span>] ** <span class="number">2</span>) * gamma[k - <span class="number">1</span>]:</span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> <span class="built_in">range</span>(k - <span class="number">2</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            reduce(k, l)</span><br><span class="line">        k = k + <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        exchange(k)</span><br><span class="line">        <span class="keyword">if</span> k &gt; <span class="number">1</span>:</span><br><span class="line">            k = k - <span class="number">1</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">shitty_hash</span>(<span class="params">msg</span>):</span><br><span class="line">    h = h0</span><br><span class="line">    msg = <span class="built_in">map</span>(<span class="built_in">ord</span>, msg)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> msg:</span><br><span class="line">        h = (h + i) * g</span><br><span class="line">        <span class="comment"># This line is just to screw you up :))</span></span><br><span class="line">        h = h &amp; <span class="number">0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> h - <span class="number">0xe6168647f636</span></span><br><span class="line">s1 = <span class="string">&#x27;a&#x27;</span> * n</span><br><span class="line">s2 = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    s2 += <span class="built_in">chr</span>(<span class="built_in">ord</span>(s1[i]) + y[<span class="number">0</span>][i])</span><br><span class="line"><span class="built_in">print</span>(y[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">max</span>(y[<span class="number">0</span>]), <span class="built_in">min</span>(y[<span class="number">0</span>]), <span class="built_in">max</span>(y[<span class="number">0</span>]) - <span class="built_in">min</span>(y[<span class="number">0</span>]))</span><br><span class="line"><span class="built_in">print</span>(s1)</span><br><span class="line"><span class="built_in">print</span>(s2)</span><br><span class="line"><span class="built_in">print</span>(shitty_hash(s1))</span><br><span class="line"><span class="built_in">print</span>(shitty_hash(s2))</span><br><span class="line"><span class="keyword">if</span> shitty_hash(s1) == shitty_hash(s2):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;ok&#x27;</span>)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;wa&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>在一万两千多次迭代之后，LLL 算法给出的如下的 $\vec{y_0}$：</p>
+<script type="math/tex; mode=display">[15, -14, 17, 14, 6, 0, 12, 21, 8, 29, 6, -4, -9, 10, -2, -12, -6, 0, -12, 13, -28, -28, -24, -3, 6, -5, -16, 15, 17, -14, 3, -2, -16, -25, 3, -21, -27, -9, 16, 5, -1, 0, -3, -4, -4, -19, 6, 8, 0, 0, 0]</script><p>并产生了两个串：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span><br><span class="line">pSrogamvi~g]Xk_U[aUnEEI^g\QprSd_QHdLFXqf`a^]]Ngiaa</span><br></pre></td></tr></table></figure>
+<p>并其 hash 值都是 $106025341237231370726407656306665079105509255639964756437758376184556498283725$。</p>
+<h2 id="Tree-Attack"><a href="#Tree-Attack" class="headerlink" title="Tree Attack"></a>Tree Attack</h2><blockquote>
+<p>来源：<a target="_blank" rel="noopener" href="https://codeforces.com/blog/entry/60442">On the mathematics behind rolling hashes and anti-hash tests</a>。</p>
+</blockquote>
+<p>有的时候，选手会对每个字符给定一个随机权值的方法来防止自己的哈希被 LLL 卡掉，这是非常不好的。</p>
+<p>Tree Attack 尝试找到 $\alpha_i\in\{-1,0,1\}$ 满足：</p>
+<script type="math/tex; mode=display">\sum_{i=0}^{n-1}(b^{n-i-1}\bmod p)\alpha_i=0</script><p>中的 $s_i-t_i$ 将被限制于 $\{-1,0,1\}$ 中，定义一个簇 $C$ 是 $\{0,1,\dots,n-1\}$ 的子集，定义簇的和为：</p>
+<script type="math/tex; mode=display">S(C)=\sum_{i\in C}\alpha_i(b^{n-i-1}\bmod p)</script><p>我们维护系数 $\alpha_i$ 上的簇 $C_1,C_2,\dots$，。</p>
+<p>我们可以将两个簇 $C_1,C_2$ 合并为一个满足 $S(C_3)=|S(C_1)-S(C_2)|$ 的簇 $C_3$：不妨设 $S(C_1)&gt;S(C_2)$，我们将 $C_2$ 中的 $\alpha_i$ 全部取反然后令 $C_3=C_1\cup C_2$ 即可。</p>
+<p>初始令 $n=2^k$（$k$ 在下面会进行分析），我们令 $\alpha_i=1$，并创建 $n$ 个簇 $C_i$，其中仅包含 $\{i\}$。</p>
+<p>在每一轮中，我们对所有簇 $C$ 按照 $S(C)$ 排序，然后合并相邻的簇，如果我们得到了一个 $S(C)=0$ 的簇 $C$，将不在 $C$ 中的所有 $\alpha_i$ 全部置为 $0$，并返回这些 $\alpha_i$。</p>
+<p>$k$ 的值应该取多少？我们可以合理地假设 $b^{n-i-1}\bmod p$ 在 $[0,p)$ 中均匀分布，那么在 $i$ 轮之后，最大值应当除以大约 $2^i$，所以 $k$ 轮以后，最大值大约为 $\dfrac p{2^{k(k-1)/2}}$，所以 $k\approx\sqrt{2\log p}+1$ 是一个合理的选择。</p>
+<h2 id="Multi-Tree-Attack"><a href="#Multi-Tree-Attack" class="headerlink" title="Multi Tree Attack"></a>Multi Tree Attack</h2><p>在 Tree Attack 的基础上，将每个簇能得到的最小的 $m$ 个值存储，显然可以在 $O(m\log m)$ 时间内合并两个簇。</p>
+<h2 id="实战演练"><a href="#实战演练" class="headerlink" title="实战演练"></a>实战演练</h2><p>叉掉 <a target="_blank" rel="noopener" href="https://codeforces.com/contest/1943/submission/251754156">CF Submission 251754156</a>，来自 $\color{purple}\sf a_little_cute$ 在 CF Round 934 (Div. 1) 对 B 题的提交。</p>
+<p>题意简述：</p>
+<blockquote>
+<p>定义字符串 $t$ 是 $k$-好的当且仅当存在一个非回文的长 $k$ 的 $t$ 的子串。</p>
+<p>对于字符串 $t$ 定义 $f(t)$ 为所有满足 $t$ 是 $k$-好的正整数 $k$ 之和。</p>
+<p>给定长 $n$ 字符串 $s$ 与 $q$ 次询问 $l,r$，求 $f(s_{l\sim r})$ 的值。</p>
+<p>$1\le n,q\le10^5$</p>
+</blockquote>
+<p>题解：</p>
+<blockquote>
+<p>如果串里全部都相同，那么答案为 $0$。如果所有奇数位置的字符和偶数位置的字符都相同，那么 $k$ 只能是偶数。</p>
+<p>注意特判一下整个串是否是回文串即可。</p>
+</blockquote>
+<p>重点来了，我们需要快速判断一个子串 $s_{l\sim r}$ 是回文的。</p>
+<p>这位选手采用了四模哈希与固定底数 $31$，模数列表为 $995662561,995662609,995662621,998244353$。</p>
+<p>用上面的模板可以找到如下碰撞：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">aaaaaaadaaaacacacacacbaadbcaccbaacecaaacadebabaaaa</span><br><span class="line">aabbbaaabfbaaeabacadaaacaaafaaadbaaaaaeafaaabaaaaa</span><br></pre></td></tr></table></figure>
+<p>所以构造这组数据：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">100 1</span><br><span class="line">aaaaaaadaaaacacacacacbaadbcaccbaacecaaacadebabaaaaaaaaabaaafaeaaaaabdaaafaaacaaadacabaeaabfbaaabbbaa</span><br><span class="line">1 100</span><br></pre></td></tr></table></figure>
+<p>即可叉掉此提交！</p>
+<p>参考代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fractions <span class="keyword">as</span> f</span><br><span class="line">K = <span class="number">2</span> ** <span class="number">50</span></span><br><span class="line">N = <span class="number">50</span></span><br><span class="line">cnt = <span class="number">4</span></span><br><span class="line">mod_ = [<span class="number">995662561</span>, <span class="number">995662609</span>, <span class="number">995662621</span>, <span class="number">998244353</span>]</span><br><span class="line">base_ = [<span class="number">31</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">31</span>]</span><br><span class="line">y = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N):</span><br><span class="line">    y.append([])</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(N):</span><br><span class="line">        <span class="keyword">if</span> i == j:</span><br><span class="line">            y[i].append(f.Fraction(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            y[i].append(f.Fraction(<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(cnt):</span><br><span class="line">        y[i].append(f.Fraction(<span class="built_in">pow</span>(base_[j], N - i, mod_[j]) * K, <span class="number">1</span>))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dot</span>(<span class="params">x, y</span>):</span><br><span class="line">    n = <span class="built_in">len</span>(x)</span><br><span class="line">    ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        ans += x[i] * y[i]</span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line">delta = f.Fraction(<span class="number">99</span>, <span class="number">100</span>)</span><br><span class="line">n, m = N, N + cnt</span><br><span class="line">y_star = [[y[<span class="number">0</span>][i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m)]]</span><br><span class="line">mu = [[f.Fraction(<span class="number">0</span>, <span class="number">1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m)] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Gram-Schmidt: i =&#x27;</span>, i)</span><br><span class="line">    y_star.append([y[i][j] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m)])</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i):</span><br><span class="line">        mu[i][j] = dot(y_star[j], y_star[i]) / dot(y_star[j], y_star[j])</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            y_star[i][k] -= y_star[j][k] * mu[i][j]</span><br><span class="line">gamma = [dot(y_star[i], y_star[i]) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">round</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> (x + f.Fraction(<span class="number">1</span>, <span class="number">2</span>)).__floor__()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reduce</span>(<span class="params">k, l</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">abs</span>(mu[k][l]) &gt; f.Fraction(<span class="number">1</span>, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            y[k][i] -= <span class="built_in">round</span>(mu[k][l]) * y[l][i]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(l):</span><br><span class="line">            mu[k][j] -= <span class="built_in">round</span>(mu[k][l]) * mu[l][j]</span><br><span class="line">        mu[k][l] -= <span class="built_in">round</span>(mu[k][l])</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exchange</span>(<span class="params">k</span>):</span><br><span class="line">    y[k - <span class="number">1</span>], y[k] = y[k], y[k - <span class="number">1</span>]</span><br><span class="line">    nu = mu[k][k - <span class="number">1</span>]</span><br><span class="line">    delta = gamma[k] + nu * nu * gamma[k - <span class="number">1</span>]</span><br><span class="line">    mu[k][k - <span class="number">1</span>] = nu * gamma[k - <span class="number">1</span>] / delta</span><br><span class="line">    gamma[k] *= gamma[k - <span class="number">1</span>] / delta</span><br><span class="line">    gamma[k - <span class="number">1</span>] = delta</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(k - <span class="number">1</span>):</span><br><span class="line">        mu[k - <span class="number">1</span>][j], mu[k][j] = mu[k][j], mu[k - <span class="number">1</span>][j]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k + <span class="number">1</span>, n):</span><br><span class="line">        xi = mu[i][k]</span><br><span class="line">        mu[i][k] = mu[i][k - <span class="number">1</span>] - nu * mu[i][k]</span><br><span class="line">        mu[i][k - <span class="number">1</span>] = mu[k][k - <span class="number">1</span>] * mu[i][k] + xi</span><br><span class="line">k = <span class="number">1</span></span><br><span class="line">maxk = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> k &lt; n:</span><br><span class="line">    <span class="keyword">if</span> maxk &lt; k:</span><br><span class="line">        maxk = k</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;LLL: new k =&#x27;</span>, k)</span><br><span class="line">    reduce(k, k - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> gamma[k] &gt;= (delta - mu[k][k - <span class="number">1</span>] ** <span class="number">2</span>) * gamma[k - <span class="number">1</span>]:</span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> <span class="built_in">range</span>(k - <span class="number">2</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            reduce(k, l)</span><br><span class="line">        k = k + <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        exchange(k)</span><br><span class="line">        <span class="keyword">if</span> k &gt; <span class="number">1</span>:</span><br><span class="line">            k = k - <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(y[<span class="number">0</span>])</span><br><span class="line">s1 = s2 = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    now = <span class="built_in">int</span>(y[<span class="number">0</span>][i])</span><br><span class="line">    <span class="keyword">if</span> now &lt;= <span class="number">0</span>:</span><br><span class="line">        s1 += <span class="string">&#x27;a&#x27;</span></span><br><span class="line">        s2 += <span class="built_in">chr</span>(<span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>) - now)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        s1 += <span class="built_in">chr</span>(<span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>) + now)</span><br><span class="line">        s2 += <span class="string">&#x27;a&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(s1)</span><br><span class="line"><span class="built_in">print</span>(s2)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calc_hash</span>(<span class="params">s, b, m</span>):</span><br><span class="line">    ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(s)):</span><br><span class="line">        ans = (ans + (<span class="built_in">ord</span>(s[i]) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)) * <span class="built_in">pow</span>(b, N - i, m)) % m</span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(cnt):</span><br><span class="line">    <span class="built_in">print</span>(calc_hash(s1, base_[i], mod_[i]), calc_hash(s2, base_[i], mod_[i]))</span><br></pre></td></tr></table></figure>
+<h2 id="构造非回文的“回文”串"><a href="#构造非回文的“回文”串" class="headerlink" title="构造非回文的“回文”串"></a>构造非回文的“回文”串</h2><p>叉掉 <a target="_blank" rel="noopener" href="https://codeforces.com/contest/1943/submission/251715199">CF Submission 251715199</a>，来自 $\color{red}\sf Crystally$ 在 CF Round 934 (Div. 1) 对 B 题的提交。</p>
+<p>这要求我们构造一个串 $s$ 满足 $H(s)=H(r(s))$，$r(s)$ 表示 $s$ 逆序得到的字符串，不妨设 $s$ 长度为 $2n$，那么：</p>
+<script type="math/tex; mode=display">\sum_{i=1}^{2n}s_ib^{i-1}\equiv \sum_{i=1}^{2n}s_{2n-i+1}b^{i-1}\pmod p</script><script type="math/tex; mode=display">\sum_{i=1}^{2n}(s_i-s_{2n-i+1})b^{i-1}\equiv0\pmod p</script><p>我们设 $x_i=s_i-s_{2n-i+1}$，则对于 $i+j=2n+1$，有 $x_i=-x_j$，所以我们只需要 $x_{1\sim n}$。</p>
+<p>那么我们有：</p>
+<script type="math/tex; mode=display">\sum_{i=1}^nx_ib^{i-1}-\sum_{i=1}^nx_ib^{2n-i+1}\equiv0\pmod p</script><script type="math/tex; mode=display">\sum_{i=1}^nx_i(b^{i-1}-b^{2n-i+1})\equiv0\pmod p</script><p>参考代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fractions <span class="keyword">as</span> f</span><br><span class="line">K = <span class="number">2</span> ** <span class="number">200</span></span><br><span class="line">N = <span class="number">50</span></span><br><span class="line">cnt = <span class="number">1</span></span><br><span class="line">mod_ = [<span class="number">2305843009213693951</span>]</span><br><span class="line">base_ = [<span class="number">1145141919</span>]</span><br><span class="line">y = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(N):</span><br><span class="line">    y.append([])</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(N):</span><br><span class="line">        <span class="keyword">if</span> i == j:</span><br><span class="line">            y[i].append(f.Fraction(<span class="number">1</span>, <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            y[i].append(f.Fraction(<span class="number">0</span>, <span class="number">1</span>))</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(cnt):</span><br><span class="line">        <span class="comment">#y[i].append(f.Fraction(pow(base_[j], N - i, mod_[j]) * K, 1))</span></span><br><span class="line">        y[i].append(f.Fraction((<span class="built_in">pow</span>(base_[j], <span class="number">2</span> * N - i - <span class="number">1</span>, mod_[j]) - <span class="built_in">pow</span>(base_[j], i, mod_[j])) % mod_[j] * K, <span class="number">1</span>))</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">dot</span>(<span class="params">x, y</span>):</span><br><span class="line">    n = <span class="built_in">len</span>(x)</span><br><span class="line">    ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        ans += x[i] * y[i]</span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line">delta = f.Fraction(<span class="number">99</span>, <span class="number">100</span>)</span><br><span class="line">n, m = N, N + cnt</span><br><span class="line">y_star = [[y[<span class="number">0</span>][i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m)]]</span><br><span class="line">mu = [[f.Fraction(<span class="number">0</span>, <span class="number">1</span>) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m)] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, n):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Gram-Schmidt: i =&#x27;</span>, i)</span><br><span class="line">    y_star.append([y[i][j] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(m)])</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i):</span><br><span class="line">        mu[i][j] = dot(y_star[j], y_star[i]) / dot(y_star[j], y_star[j])</span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            y_star[i][k] -= y_star[j][k] * mu[i][j]</span><br><span class="line">gamma = [dot(y_star[i], y_star[i]) <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n)]</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">round</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> (x + f.Fraction(<span class="number">1</span>, <span class="number">2</span>)).__floor__()</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">reduce</span>(<span class="params">k, l</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">abs</span>(mu[k][l]) &gt; f.Fraction(<span class="number">1</span>, <span class="number">2</span>):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(m):</span><br><span class="line">            y[k][i] -= <span class="built_in">round</span>(mu[k][l]) * y[l][i]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(l):</span><br><span class="line">            mu[k][j] -= <span class="built_in">round</span>(mu[k][l]) * mu[l][j]</span><br><span class="line">        mu[k][l] -= <span class="built_in">round</span>(mu[k][l])</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exchange</span>(<span class="params">k</span>):</span><br><span class="line">    y[k - <span class="number">1</span>], y[k] = y[k], y[k - <span class="number">1</span>]</span><br><span class="line">    nu = mu[k][k - <span class="number">1</span>]</span><br><span class="line">    delta = gamma[k] + nu * nu * gamma[k - <span class="number">1</span>]</span><br><span class="line">    mu[k][k - <span class="number">1</span>] = nu * gamma[k - <span class="number">1</span>] / delta</span><br><span class="line">    gamma[k] *= gamma[k - <span class="number">1</span>] / delta</span><br><span class="line">    gamma[k - <span class="number">1</span>] = delta</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(k - <span class="number">1</span>):</span><br><span class="line">        mu[k - <span class="number">1</span>][j], mu[k][j] = mu[k][j], mu[k - <span class="number">1</span>][j]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(k + <span class="number">1</span>, n):</span><br><span class="line">        xi = mu[i][k]</span><br><span class="line">        mu[i][k] = mu[i][k - <span class="number">1</span>] - nu * mu[i][k]</span><br><span class="line">        mu[i][k - <span class="number">1</span>] = mu[k][k - <span class="number">1</span>] * mu[i][k] + xi</span><br><span class="line">k = <span class="number">1</span></span><br><span class="line">maxk = <span class="number">1</span></span><br><span class="line"><span class="keyword">while</span> k &lt; n:</span><br><span class="line">    <span class="keyword">if</span> maxk &lt; k:</span><br><span class="line">        maxk = k</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;LLL: new k =&#x27;</span>, k)</span><br><span class="line">    reduce(k, k - <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">if</span> gamma[k] &gt;= (delta - mu[k][k - <span class="number">1</span>] ** <span class="number">2</span>) * gamma[k - <span class="number">1</span>]:</span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> <span class="built_in">range</span>(k - <span class="number">2</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">            reduce(k, l)</span><br><span class="line">        k = k + <span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        exchange(k)</span><br><span class="line">        <span class="keyword">if</span> k &gt; <span class="number">1</span>:</span><br><span class="line">            k = k - <span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(y[<span class="number">0</span>])</span><br><span class="line">s1 = s2 = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    now = <span class="built_in">int</span>(y[<span class="number">0</span>][i])</span><br><span class="line">    <span class="keyword">if</span> now &lt;= <span class="number">0</span>:</span><br><span class="line">        s1 += <span class="string">&#x27;a&#x27;</span></span><br><span class="line">        s2 += <span class="built_in">chr</span>(<span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>) - now)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        s1 += <span class="built_in">chr</span>(<span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>) + now)</span><br><span class="line">        s2 += <span class="string">&#x27;a&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(s1)</span><br><span class="line"><span class="built_in">print</span>(s2)</span><br><span class="line"><span class="built_in">print</span>(s1 + s2[::-<span class="number">1</span>])</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">calc_hash</span>(<span class="params">s, b, m</span>):</span><br><span class="line">    ans = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(s)):</span><br><span class="line">        ans = (ans + (<span class="built_in">ord</span>(s[i]) - <span class="built_in">ord</span>(<span class="string">&#x27;a&#x27;</span>)) * <span class="built_in">pow</span>(b, i, m)) % m</span><br><span class="line">    <span class="keyword">return</span> ans</span><br><span class="line">s = s1 + s2[::-<span class="number">1</span>]</span><br><span class="line"><span class="comment">#for i in range(cnt):</span></span><br><span class="line"><span class="comment">#    print(calc_hash(s1, base_[i], mod_[i]), calc_hash(s2, base_[i], mod_[i]))</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(cnt):</span><br><span class="line">    <span class="built_in">print</span>(calc_hash(s, base_[i], mod_[i]), calc_hash(s[::-<span class="number">1</span>], base_[i], mod_[i]))</span><br></pre></td></tr></table></figure></article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>License</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+
+    <section id="share">
+      <div class="header"><span>Share</span></div>
+      <div class="body">
+        <div class="link"><input class="copy-area" readonly="true" id="copy-link" value="https://sunchaoyi923.github.io/2026/01/23/hash/" /></div>
+        <div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot;)"><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/b32ef3da1162a.svg" /></a><a class="social share-item email" href="mailto:?subject=2022 NOIP 备赛记 - SUNCHAOYI&amp;body=https://sunchaoyi923.github.io/2026/01/23/hash/"><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/a1b00e20f425d.svg" /></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;Copied!&quot;)"><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/8411ed322ced6.svg" /></a></div>
+        
+        <div class="qrcode" id="qrcode-wechat" style="opacity:0;height:0">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=https://sunchaoyi923.github.io/2026/01/23/hash/"/>
+        </div>
+        
+      </div>
+    </section>
+    </div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">Older</div><a href="/2026/01/01/CUHKSZ%20Notes/">CUHK-Shenzhen Notes</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Chaoyi, Sun</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">On This Page</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E6%A8%A1%E5%93%88%E5%B8%8C"><span class="toc-text">单模哈希</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E7%84%B6%E6%BA%A2%E5%87%BA%E5%93%88%E5%B8%8C"><span class="toc-text">自然溢出哈希</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%A8%A1%E5%93%88%E5%B8%8C"><span class="toc-text">多模哈希</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%BC%E4%B8%8E%E5%9F%BA"><span class="toc-text">格与基</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gram-Schmidt-%E6%AD%A3%E4%BA%A4%E5%8C%96"><span class="toc-text">Gram-Schmidt 正交化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LLL-%E7%AE%97%E6%B3%95%E4%B8%BB%E4%BD%93"><span class="toc-text">LLL 算法主体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CVP"><span class="toc-text">CVP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9-LLL-%E5%8D%A1%E5%B8%B8"><span class="toc-text">对 LLL 卡常</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%A1%E6%8E%89%E5%93%88%E5%B8%8C%EF%BC%81"><span class="toc-text">卡掉哈希！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Tree-Attack"><span class="toc-text">Tree Attack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Multi-Tree-Attack"><span class="toc-text">Multi Tree Attack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E6%BC%94%E7%BB%83"><span class="toc-text">实战演练</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E9%9D%9E%E5%9B%9E%E6%96%87%E7%9A%84%E2%80%9C%E5%9B%9E%E6%96%87%E2%80%9D%E4%B8%B2"><span class="toc-text">构造非回文的“回文”串</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>Scroll to Top</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `Just`,
+      min: `minutes ago`,
+      hour: `hours ago`,
+      day: `days ago`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":[],"codeblock":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `Switched to Light Mode`,
+      dark: `Switched to Dark Mode`,
+      auto: `Switched to Auto Mode`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+
+<script id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
